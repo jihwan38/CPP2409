@@ -13,5 +13,5 @@ int main()
     outTemperature = (5.0 / 9.0) * (inTemperature - 32);
     cout << "섭씨온도 = " << outTemperature << endl;
 
-
+    return 0;
 }
