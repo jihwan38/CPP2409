@@ -8,18 +8,24 @@ int main(){
     cout << "3개의 정수를 입력하시오: ";
     cin >> a >> b >> c;
 
-    if (a >= b) {
-        if(a >= c) 
+    if(a >= b){
+        if(a >= c){
             largest = a;
-        
+        }
     }
-    else if (b >= a) {
-        if(b >= c) 
+    
+    if(b >= c){
+        if(b >= a){
             largest = b;
-        
+        }
     }
-    else 
-        largest = c;
+    
+    if(c >= a){
+        if(c >= b){
+            largest = c;
+        }
+    }
+    
         
     
 
