@@ -63,34 +63,63 @@ int main(){
         cout << "---|---|---" << endl;
         
         //6.1 빙고(대각선) 시 승자 출력 후 종료
-        if(((board[0][0] != ' ') && (board[0][0] == board[1][1]) && (board[0][0] == board[2][2]))||((board[0][2] != ' ')&&(board[0][2] == board[1][1]) && (board[0][2] == board[2][0]))){
+        if(((board[0][0] != ' ') && (board[0][0] == board[1][1]) && (board[0][0] == board[2][2]))){
+            cout << "왼쪽 위에서 오른쪽 아래 대각선으로 모두 돌이 놓였습니다!: ";
             if((k%2) == 0){
-                cout << "첫번째 유저(x)의 승리입니다." << endl;
+                cout << "첫번째 유저(x)의 승리입니다!" << endl;
                 cout << "게임을 종료합니다." << endl;
                 return 0;
             }else{
-                cout << "두번째 유저(o)의 승리입니다." << endl;
+                cout << "두번째 유저(o)의 승리입니다!" << endl;
                 cout << "게임을 종료합니다." << endl;
                 return 0;
             }
         
         }
 
-        //6.2 빙고(가로,세로) 시 승자 출력 후 종료
-        for(int i = 0; i < numCell; i++){
-            if(((board[i][0]!= ' ') && (board[i][0] == board[i][1]) && (board[i][0] == board[i][2]))||((board[0][i] != ' ') && (board[0][i] == board[1][i]) && (board[0][i] == board[2][i]))){
-             if((k%2) == 0){
-                cout << "첫번째 유저(x)의 승리입니다." << endl;
+        if(((board[0][2] != ' ')&&(board[0][2] == board[1][1]) && (board[0][2] == board[2][0]))){
+            cout << "오른쪽 위에서 왼쪽 아래 대각선으로 모두 돌이 놓였습니다!: ";
+            if((k%2) == 0){
+                cout << "첫번째 유저(x)의 승리입니다!" << endl;
                 cout << "게임을 종료합니다." << endl;
                 return 0;
-            }else{
-                cout << "두번째 유저(o)의 승리입니다." << endl;
+                }else{
+                cout << "두번째 유저(o)의 승리입니다!" << endl;
                 cout << "게임을 종료합니다." << endl;
                 return 0;
-            }  
-            }
+             }
+        
         }
 
+        //6.2 빙고(가로,세로) 시 승자 출력 후 종료
+        for(int i = 0; i < numCell; i++){
+            if(((board[i][0]!= ' ') && (board[i][0] == board[i][1]) && (board[i][0] == board[i][2]))){
+                cout << "가로줄로 모두 돌이 놓였습니다!: ";
+                if((k%2) == 0){
+                    cout << "첫번째 유저(x)의 승리입니다!" << endl;
+                    cout << "게임을 종료합니다." << endl;
+                     return 0;
+                 }else{
+                    cout << "두번째 유저(o)의 승리입니다!" << endl;
+                    cout << "게임을 종료합니다." << endl;
+                     return 0;
+                }  
+            }
+        
+        
+            if(((board[0][i] != ' ') && (board[0][i] == board[1][i]) && (board[0][i] == board[2][i]))){
+                cout << "세로줄로 모두 돌이 놓였습니다!: ";
+                if((k%2) == 0){
+                    cout << "첫번째 유저(x)의 승리입니다!" << endl;
+                    cout << "게임을 종료합니다." << endl;
+                     return 0;
+                }else{
+                    cout << "두번째 유저(o)의 승리입니다!" << endl;
+                    cout << "게임을 종료합니다." << endl;
+                    return 0;
+                }  
+            }
+        }
         
         k++;
 
