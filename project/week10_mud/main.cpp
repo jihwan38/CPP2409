@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "user.h"
+#include <vector>
 
 using namespace std;
 
@@ -10,9 +11,9 @@ const int mapY = 5;
 
 // 사용자 정의 함수
 bool checkXY(int user_x, int mapX, int user_y, int mapY);
-void displayMap(int map[][mapX], int user_x, int user_y);
-bool checkGoal(int map[][mapX], int user_x, int user_y);
-void checkState(int map[][mapX], int user_x, int user_y, User &user);
+void displayMap( vector<vector<int>> map, int user_x, int user_y);
+bool checkGoal(vector<vector<int>> map, int user_x, int user_y);
+void checkState(vector<vector<int>> map, int user_x, int user_y, User &user);
 void zeroHp(int user_hp);
 int goBack(int user_x, int mapX, int user_y, int mapY);
 bool CheckUser(User user);
@@ -20,7 +21,7 @@ bool CheckUser(User user);
 // 메인  함수
 int main() {
 	// 0은 빈 공간, 1은 아이템, 2는 적, 3은 포션, 4는 목적지
-	int map[mapY][mapX] = { {0, 1, 2, 0, 4},   
+	vector<vector<int>> map = { {0, 1, 2, 0, 4},   
 					        {1, 0, 0, 2, 0},
 					        {0, 0, 0, 0, 0},
 					        {0, 2, 3, 0, 0},
@@ -121,7 +122,7 @@ int main() {
 
 
 // 지도와 사용자 위치 출력하는 함수
-void displayMap(int map[][mapX], int user_x, int user_y) {
+void displayMap(vector<vector<int>> map, int user_x, int user_y) {
 	for (int i = 0; i < mapY; i++) {
 		for (int j = 0; j < mapX; j++) {
 			if (i == user_y && j == user_x) {
@@ -163,7 +164,7 @@ bool checkXY(int user_x, int mapX, int user_y, int mapY) {
 }
 
 // 유저의 위치가 목적지인지 체크하는 함수
-bool checkGoal(int map[][mapX], int user_x, int user_y) {
+bool checkGoal(vector<vector<int>> map, int user_x, int user_y) {
 	// 목적지 도착하면
 	if (map[user_y][user_x] == 4) {
 		return true;
@@ -172,7 +173,7 @@ bool checkGoal(int map[][mapX], int user_x, int user_y) {
 }
 
 //사용자의 HP 관리 및 현 위치의 아이템, 적, 포션 유무 확인 함수
-void checkState(int map[][mapX], int user_x, int user_y, User &user){
+void checkState(vector<vector<int>> map, int user_x, int user_y, User &user){
     //checkState 함수가 호출 되었다는 것은 올바른 위치로 사용자가 이동한 것이므로 hp를 1 감소
     user.DecreaseHP(1);
 
