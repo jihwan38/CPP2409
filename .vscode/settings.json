@@ -4,6 +4,13 @@
         "ostream": "cpp",
         "iostream": "cpp",
         "__locale": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "bitset": "cpp",
+        "ios": "cpp",
+        "istream": "cpp",
+        "new": "cpp",
+        "streambuf": "cpp",
+        "typeinfo": "cpp",
+        "iosfwd": "cpp"
     }
 }
