@@ -11,12 +11,20 @@ const int mapY = 5;
 
 // 사용자 정의 함수
 bool checkXY(int user_x, int mapX, int user_y, int mapY);
-void displayMap( vector<vector<int>> map, int user_x, int user_y);
+void displayMap( vector<vector<int>> map, int magician_x, int magician_y, int warrior_x, int warrior_y, int counter);
 bool checkGoal(vector<vector<int>> map, int user_x, int user_y);
 void checkState(vector<vector<int>> map, int user_x, int user_y, User &user);
 void zeroHp(int user_hp);
 int goBack(int user_x, int mapX, int user_y, int mapY);
 bool CheckUser(User user);
+
+// 유저의 위치를 저장할 변수
+int user_x = 0; // 가로 번호
+int user_y = 0; // 세로 번호
+int magician_x = 0;
+int magician_y = 0;
+int warrior_x = 0;
+int warrior_y = 0;
 
 // 메인  함수
 int main() {
@@ -28,19 +36,37 @@ int main() {
 					        {3, 0, 0, 0, 2} };
 
 
-	// 유저의 위치를 저장할 변수
-	int user_x = 0; // 가로 번호
-	int user_y = 0; // 세로 번호
 
+
+	
     User user; //단일 유저 생성
+	Magician magician;
+	Warrior warrior;
+
+	int counter = 0;
+
 
 	// 게임 시작 
 	while (1) { // 사용자에게 계속 입력받기 위해 무한 루프
 
+
+
 		// 사용자의 입력을 저장할 변수
 		string user_input = "";
-
-        cout << "현재 HP: " << user.GetHP() << "  ";
+		if(counter % 2 == 0 ) {
+			user = magician;
+			user_x = magician_x;
+			user_y = magician_y;
+			cout << "마법사 차례입니다." << endl;
+			cout << "현재 HP: " <<magician.GetHP() << "  ";
+		}else{
+			user = warrior;
+			user_x = warrior_x;
+			user_y = warrior_y;
+			cout << "전사 차례입니다." << endl;
+			cout << "현재 HP: " << warrior.GetHP() << "  ";
+		}
+        
 		cout << "명령어를 입력하세요 (상,하,좌,우,정보,지도,종료): ";
 		cin >> user_input;
 
@@ -50,8 +76,11 @@ int main() {
             int back = goBack(user_x, mapX, user_y, mapY);
             user_y += back;
 			if(back == 0) {
+				if(counter % 2 == 0) magician_y = user_y;
+				else warrior_y = user_y;
+				counter++;
 				cout << "위로 한 칸 올라갑니다." << endl;
-				displayMap(map, user_x, user_y);
+				displayMap(map, magician_x, magician_y, warrior_x, warrior_y, counter);
                 checkState(map,user_x,user_y, user);
 			}
 		}
@@ -61,8 +90,11 @@ int main() {
             int back = goBack(user_x, mapX, user_y, mapY);
             user_y -= back;
 			if(back == 0) {
+				if(counter % 2 == 0) magician_y = user_y;
+				else warrior_y = user_y;
+				counter++;
 				cout << "위로 한 칸 내려갑니다." << endl;
-				displayMap(map, user_x, user_y);
+				displayMap(map, magician_x, magician_y, warrior_x, warrior_y, counter);
                 checkState(map,user_x,user_y, user);
 			}
 		}
@@ -72,8 +104,11 @@ int main() {
             int back = goBack(user_x, mapX, user_y, mapY);
             user_x += back;
 			if(back == 0) {
+				if(counter % 2 == 0) magician_x = user_x;
+				else warrior_x = user_x;
+				counter++;
 				cout << "왼쪽으로 이동합니다." << endl;
-				displayMap(map, user_x, user_y);
+				displayMap(map, magician_x, magician_y, warrior_x, warrior_y, counter);
                 checkState(map,user_x,user_y, user);
 			}
 		}
@@ -83,8 +118,11 @@ int main() {
             int back = goBack(user_x, mapX, user_y, mapY);
             user_x -= back;
 			if(back == 0) {
+				if(counter % 2 == 0) magician_x = user_x;
+				else warrior_x = user_x;
+				counter++;
 				cout << "오른쪽으로 이동합니다." << endl;
-				displayMap(map, user_x, user_y);
+				displayMap(map, magician_x, magician_y, warrior_x, warrior_y, counter);
                 checkState(map,user_x,user_y, user);
 			}
 		}
@@ -93,7 +131,7 @@ int main() {
 		}
 		else if (user_input == "지도") {
 			// TODO: 지도 보여주기 함수 호출
-			displayMap(map, user_x, user_y);
+			displayMap(map, magician_x, magician_y, warrior_x, warrior_y, counter);
 		}
 		else if (user_input == "종료") {
 			cout << "종료합니다.";
@@ -119,17 +157,40 @@ int main() {
 			break;
 		}
 
+		//왜 나머지가 서로 바뀌었나? --> 아까 counter 값을 올렸기 때문에
+		if(counter % 2 ==1 ){
+			magician.ChangeHP(user.GetHP());
+			magician.ChangeItem(user.GetItem());
+		}
+		else{
+			warrior.ChangeHP(user.GetHP());
+			warrior.ChangeItem(user.GetItem());
+		}
+
+			
+		
+
+
+
 	}
 	return 0;
 }
 
 
 // 지도와 사용자 위치 출력하는 함수
-void displayMap(vector<vector<int>> map, int user_x, int user_y) {
+void displayMap(vector<vector<int>> map, int magician_x, int magician_y, int warrior_x, int warrior_y, int counter) {
+
+	
 	for (int i = 0; i < mapY; i++) {
 		for (int j = 0; j < mapX; j++) {
-			if (i == user_y && j == user_x) {
-				cout << " USER |"; // 양 옆 1칸 공백
+			if(i == magician_y && j == magician_x && i == warrior_y && j == warrior_x){
+				cout << " M/ W |";
+			}
+			else if(i == magician_y && j == magician_x){
+				cout << "    M |";
+			}
+			else if(i == warrior_y && j == warrior_x){
+				cout << "    W |";
 			}
 			else {
 				int posState = map[i][j];

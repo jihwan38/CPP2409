@@ -11,6 +11,9 @@
         "new": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp",
-        "iosfwd": "cpp"
-    }
+        "iosfwd": "cpp",
+        "__bit_reference": "cpp",
+        "unordered_map": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
