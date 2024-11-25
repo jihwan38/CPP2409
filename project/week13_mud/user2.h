@@ -2,21 +2,23 @@
 using namespace std;
 
 class User{
-protected:
+private:
     int hp;
     int itemCnt;
+    friend class Magician;
+    friend class Warrior;
 public:
     User();
-    friend std::ostream& operator << (std::ostream& os, const User& user);
+    friend std::ostream& operator << (std::ostream& os, const User* user);
     
     
-    virtual void DecreaseHp() = 0;
-    virtual void IncreaseHp() = 0;
+    virtual void DecreaseHp(int dec_hp) = 0;
+    virtual void IncreaseHp(int inc_hp) = 0;
     virtual int GetHp() = 0;
     virtual int GetItem() = 0;
     virtual void IncreaseItem() = 0;
-    virtual void ChangeHp() = 0;
-    virtual void ChangeItem() = 0;
+    virtual void ChangeHp(int hp) = 0;
+    virtual void ChangeItem(int itemCnt) = 0;
     virtual void DoAttack() = 0;
 };
 

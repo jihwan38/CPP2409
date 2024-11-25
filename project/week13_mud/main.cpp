@@ -60,7 +60,7 @@ int main() {
 		string user_input = "";
 
         cout << "현재 HP: " << user -> GetHp() << "  ";
-		cout << "명령어를 입력하세요 (상,하,좌,우,지도,종료): ";
+		cout << "명령어를 입력하세요 (상,하,좌,우,지도,정보,종료): ";
 		cin >> user_input;
 
 		if (user_input == "상") {
@@ -71,7 +71,7 @@ int main() {
 			if(back == 0) {
 				cout << "위로 한 칸 올라갑니다." << endl;
 				displayMap(map, user_x, user_y);
-                checkState(map,user_x,user_y, *user);
+                checkState(map,user_x,user_y, user);
 			}
 		}
 		else if (user_input == "하") {
@@ -82,7 +82,7 @@ int main() {
 			if(back == 0) {
 				cout << "위로 한 칸 내려갑니다." << endl;
 				displayMap(map, user_x, user_y);
-                checkState(map,user_x,user_y, *user);
+                checkState(map,user_x,user_y, user);
 			}
 		}
 		else if (user_input == "좌") {
@@ -93,7 +93,7 @@ int main() {
 			if(back == 0) {
 				cout << "왼쪽으로 이동합니다." << endl;
 				displayMap(map, user_x, user_y);
-                checkState(map,user_x,user_y, *user);
+                checkState(map,user_x,user_y, user);
 			}
 		}
 		else if (user_input == "우") {
@@ -110,6 +110,9 @@ int main() {
 		else if (user_input == "지도") {
 			// TODO: 지도 보여주기 함수 호출
 			displayMap(map, user_x, user_y);
+		}
+		else if (user_input == "정보"){
+			cout << user << endl;
 		}
 		else if (user_input == "종료") {
 			cout << "종료합니다.";
@@ -194,19 +197,19 @@ bool checkGoal(vector<vector<int>> map, int user_x, int user_y) {
 //사용자의 HP 관리 및 현 위치의 아이템, 적, 포션 유무 확인 함수
 void checkState(vector<vector<int>> map, int user_x, int user_y, User *user){
     //checkState 함수가 호출 되었다는 것은 올바른 위치로 사용자가 이동한 것이므로 hp를 1 감소
-    user -> DecreaseHP(1);
+    user -> DecreaseHp(1);
 
       //사용자의 위치에 아이템이 있을 경우
     if(map[user_y][user_x] == 1){
         cout << "아이템이 있습니다" << endl;
-        
+        user -> IncreaseItem();
     } //사용자의 위치에 적이 있을 경우
     else if(map[user_y][user_x] == 2){
-        user -> DecreaseHP(2); //hp 2 감소
+        user -> DecreaseHp(2); //hp 2 감소
         cout << "적이 있습니다" << "HP가 2 줄어듭니다." << endl;
     } //사용자의 위치에 포션이 있을 경우
     else if(map[user_y][user_x] == 3){
-        user -> IncreaseHP(2); //hp 2 증가
+        user -> IncreaseHp(2); //hp 2 증가
         cout << "포션이 있습니다" << "HP가 2 늘어납니다." << endl;
     }
     
@@ -215,7 +218,7 @@ void checkState(vector<vector<int>> map, int user_x, int user_y, User *user){
 
 //사용자의 Hp 체크하는 함수
 bool CheckUser(User *user){
-    if(user -> GetHP() <= 0){
+    if(user -> GetHp() <= 0){
         return false;
     }
     else return true;
